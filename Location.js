@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { StatusBar,StyleSheet,Dimensions} from 'react-native';
+import { View, Text} from 'react-native';
+import { CommonActions,StackActions } from '@react-navigation/native';
 import { config, styles } from './App';
 import { NativeBaseProvider, Box, Button } from 'native-base';
 
-export default function Location({ navigation }) {
+export default function Location({ navigation,route }) {
+  
+  const newUser= route.params.newUser
+  
   return (
     <NativeBaseProvider config={config}>
     <View
@@ -29,13 +32,17 @@ export default function Location({ navigation }) {
         </View>
 
 
-
+        <Button
+         onPress={()=>console.log(route.params.newUser)}
+        >t</Button>
 
         <Button size="lg"
           w="100%"
           bg="coolGray.200"
           _text="coolGray.800"
-          onPress={() => navigation.navigate('Game')}>
+          onPress={()=>{navigation.dispatch(
+            CommonActions.navigate("Game",{screen:"Main",params:{newUser}})
+          )}}>
           Next
         </Button>
 

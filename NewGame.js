@@ -7,24 +7,30 @@ import { config, styles } from './App';
 
 
 
-export default function HomeScreen({ navigation,route }) {
+export default function NewGame({ navigation,route }) {
+
+  const [name, setName] = useState("");
+  const [weather, setWeather] = useState("");
+
+  const newUser={
+    Name:name,
+    Weather:weather,
+    Location:""
+  }
 
 
   const handleChange = (event) => {
-    console.log(route);
-    route.params.setName(event);
+    setName(event);
   }
   return (
     <NativeBaseProvider config={config}>
       <View
-            style={{ flex: 1,height:"100%", alignItems: 'center', justifyContent: 'center' }}>
-
+          style={{ flex: 1,height:"100%", alignItems: 'center', justifyContent: 'center' }}>
         <Box
           style={styles.main}
           bg={{ linearGradient: { colors: ['info.600', 'blue.800'], start: [0, 0], end: [0, 1] } }}
           _text={{ fontSize: 'md', fontWeight: 'bold', color: 'white' }}
         >
-
           <Text style={styles.textHeader}>LOGO</Text>
           <Text style={styles.textBody}>Select an icon that matches the current weather...</Text>
           <View p={"10"} h={"100%"} style={[styles.buttonContainer]}>
@@ -35,36 +41,36 @@ export default function HomeScreen({ navigation,route }) {
             <Button size={20} style={[styles.button]}
               onPress={() => { console.log("press"); }}
               borderRadius="full"
-              onPressIn={()=>route.params.setWeather("Cloudy")}
+              onPressIn={()=>setWeather("Cloudy")}
             >
               <FontAwesome5 name={"cloud"} size={60} color={"white"} />
             </Button>
             <Button size={20} style={[styles.button]}
             borderRadius="full"
-            onPressIn={()=>route.params.setWeather("Sunny")}
+            onPressIn={()=>setWeather("Sunny")}
             >
               <FontAwesome5 name={"sun"} size={75} color={"white"} />
             </Button>
 
             <Button size={20} style={[styles.button]}borderRadius="full"
-            onPressIn={()=>route.params.setWeather("Snowing")}
+            onPressIn={()=>setWeather("Snowing")}
             >
               <FontAwesome5 name={"snowflake"} size={60} color={"white"} />
             </Button>
             <Button size={20} style={[styles.button]} borderRadius="full"
-            onPressIn={()=>route.params.setWeather("Raining")}
+            onPressIn={()=>setWeather("Raining")}
             >
               <FontAwesome5 name={"cloud-rain"} size={60} color={"white"} />
             </Button>
 
             <Button size={20} style={[styles.button]} borderRadius="full"
-            onPressIn={()=>route.params.setWeather("Drizzling")}
+            onPressIn={()=>setWeather("Drizzling")}
             >
               <FontAwesome5 name={"cloud-sun-rain"} size={75} color={"white"} />
             </Button>
 
             <Button size={20} style={[styles.button]}borderRadius="full"
-            onPressIn={()=>route.params.setWeather("Rainbow")}
+            onPressIn={()=>setWeather("Rainbow")}
             >
               <FontAwesome5 name={"rainbow"} size={60} color={"white"} />
             </Button>
@@ -77,7 +83,13 @@ export default function HomeScreen({ navigation,route }) {
                 _text="coolGray.800"
                 w="90%"
 
-                onPress={() => navigation.navigate('Location')}
+                onPress={() => {
+                  navigation.navigate({
+                    name:"Location",
+                    params:{newUser}
+                    }
+                  )
+                }}
                 >
                 Next
           </Button>

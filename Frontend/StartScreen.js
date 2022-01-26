@@ -39,6 +39,13 @@ export default function StartScreen({ navigation }) {
             m={2}
             w={150}
             isDisabled={true}>Sign Up</Button>
+                      <Button
+            m={2}
+            w={150}
+            bg="warning.400"
+            isDisabled={false}
+            onPress={() => navigation.navigate('Server')}
+          >Server Details</Button>
 
         </Box>
       </View>

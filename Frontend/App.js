@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StatusBar, StyleSheet, Dimensions, LogBox } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { StatusBar, StyleSheet,Dimensions, LogBox,PermissionsAndroid } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUp from './NewGame.js';
@@ -7,12 +7,12 @@ import Location from './Location.js';
 import StartScreen from './StartScreen.js';
 import Game from './Game.js';
 import  ServerScreen  from './ServerScreen';
+import Camera from './components/Camera.js'
 
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
-
 
 export default function App() {
 
@@ -21,8 +21,34 @@ export default function App() {
   const GameStack = createNativeStackNavigator();
 
 
+  const CameraScreen = () =>{
+    return(<Camera />)
+  }
+  useEffect(() => {
+    const getPerm = async () =>{
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            'title': 'Example App',
+            'message': 'Example App access to your location '
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log("You can use the location");
+        } else {
+          console.log("location permission denied");
+          alert("Location permission denied");
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
 
-
+    getPerm();
+    
+  }, []);
+  
 
   const GameStackScreen = () => {
     return (
@@ -62,6 +88,8 @@ export default function App() {
           name="Game" component={GameStackScreen} />
         <Stack.Screen 
           name="Server" component={ServerScreen} />
+        <Stack.Screen 
+          name="Camera" component={CameraScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

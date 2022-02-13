@@ -4,7 +4,16 @@ import { NativeBaseProvider, Box, Button } from 'native-base';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { styles } from './App';
 
+
+
+
 export default function StartScreen({ navigation }) {
+    
+  const newUser={
+    Name:"Jack",
+    Weather:"",
+    Location:""
+  }
   return (
     <NativeBaseProvider>
       <View
@@ -25,7 +34,7 @@ export default function StartScreen({ navigation }) {
             w={150}
             bg="warning.400"
             isDisabled={false}
-            onPress={() => navigation.navigate('NewGame',{screen:"SignUp"})}
+            onPress={() => navigation.navigate("Game",{params:{newUser}})}
           >New Game</Button>
           <Button
             m={2}
